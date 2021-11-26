@@ -5,7 +5,6 @@ void main(){
     home: homepage(),
   ));
 }
-
 class homepage extends StatefulWidget {
   const homepage({Key? key}) : super(key: key);
   @override
@@ -13,12 +12,13 @@ class homepage extends StatefulWidget {
 }
 
 class _homepageState extends State<homepage> {
-  String name="sol";
+  String name="";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("flutter app"),
+        title: const Text("flutter  app"),
         centerTitle: true,
       ),
       body: Container(
@@ -26,19 +26,21 @@ class _homepageState extends State<homepage> {
           children: <Widget>[
             TextField(
               onSubmitted: (String userinput){
-              setState(() {
-                name=userinput;
-              });
-                },),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Text("your text is $name"),
-            )
+                setState(() {
+                  name= userinput;
 
+                });
+
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Text("current user input is $name"),
+            ),
           ],
         ),
       ),
+
     );
   }
 }
-
