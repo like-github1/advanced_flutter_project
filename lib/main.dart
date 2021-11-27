@@ -96,7 +96,7 @@ class _homepageState extends State<homepage> {
                     controller: termtextEditingController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      errorStyle: TextStyle(
+                      errorStyle: const TextStyle(
                         color: Colors.red,
                       ),
                         hintText: "eneter number",
