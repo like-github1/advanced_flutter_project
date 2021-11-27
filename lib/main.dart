@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 void main(){
   runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
     title: " Simple Interest Calculator App",
     home: homepage(),
+    //flutter primerycolor
+
   ));
 }
 
@@ -17,7 +20,11 @@ class homepage extends StatefulWidget {
 class _homepageState extends State<homepage> {
   List<String>namelist=["dollar",'yeroo','rupii'];
   final _miniPadding=5.0;
-  String namevalue="name";
+  String namevalue="dollar";
+  TextEditingController textEditingController=TextEditingController();
+  TextEditingController principaltextEditingControllers=TextEditingController();
+  TextEditingController termtextEditingController=TextEditingController();
+ double Dispalytext= 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +40,7 @@ class _homepageState extends State<homepage> {
           Padding(
             padding:  EdgeInsets.all(_miniPadding),
             child: TextField(
+              controller: textEditingController,
              keyboardType: TextInputType.number,
              decoration: InputDecoration(
                labelText: "enter your name",
@@ -49,10 +57,11 @@ class _homepageState extends State<homepage> {
             Padding(
               padding:  EdgeInsets.all(_miniPadding),
               child: TextField(
+                controller: principaltextEditingControllers,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                    labelText: "enter your name",
-                    hintText: 'name',
+                    labelText: "principal",
+                    hintText: 'enter principal',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
 
@@ -66,10 +75,11 @@ class _homepageState extends State<homepage> {
               children: <Widget>[
                 Expanded(
                   child: TextField(
+                    controller: termtextEditingController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         hintText: "eneter number",
-                        labelText: 'please eneter name',
+                        labelText: 'Term',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                         )
@@ -79,17 +89,14 @@ class _homepageState extends State<homepage> {
 
                Expanded(
                     child: DropdownButton(
-                      items: <String>['name','city','adress'].map((e){
+                      items: namelist.map((e){
                         return DropdownMenuItem<String>(
                           value: e,
                           child: Text(e),
                         );
                       }).toList(),
                       onChanged: (index){
-                        setState(() {
-                          namevalue=index as String;
-                        });
-
+                        doropdownSelecteditem(index);
                       },
                       value: namevalue,
                     ),
@@ -102,20 +109,31 @@ class _homepageState extends State<homepage> {
               children: <Widget>[
                  Expanded(
                     child: ElevatedButton(
-                      onPressed: (){},
+
+                      onPressed: (){
+                        setState(() {
+                          Dispalytext=getPrincipal();
+
+                        });
+                      },
                       child: Text("calculet"),
                     ),
                   ),
                  Expanded(
                     child: ElevatedButton(
-                      onPressed: (){},
-                      child: Text("calculet"),
+                      onPressed: (){
+                    setState(() {
+                      _reset();
+                    });
+                      },
+                      child: Text("reset"),
 
                     ),
                   ),
 
               ],
             ),
+            Text("your Current principal is $Dispalytext")
           ],
         ),
       ),
@@ -131,5 +149,29 @@ class _homepageState extends State<homepage> {
     );
 
   }
+
+  void doropdownSelecteditem(Object? index) {
+    setState(() {
+      namevalue=index as String;
+    });
+  }
+
+  double getPrincipal() {
+    double principal= double.parse(principaltextEditingControllers.text);
+    double text= double.parse(textEditingController.text);
+    double term= double.parse(this.termtextEditingController.text);
+    double totalamountopay= principal+(principal*text*term)/100;
+    return totalamountopay;
+
+  }
+
+  void _reset() {
+     Dispalytext=0.0;
+    termtextEditingController.text="";
+     principaltextEditingControllers.text="";
+   textEditingController.text="";
+     namevalue=namelist[0];
+  }
 }
+
 
