@@ -21,12 +21,13 @@ class _homepageState extends State<homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     // resizeToAvoidBottomInset: false,//avoids bottom overflow
       appBar: AppBar(
         title: const Text("Calculator app"),
         centerTitle:true ,
       ),
       body: Container(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             getimage(),
           Padding(
@@ -75,23 +76,46 @@ class _homepageState extends State<homepage> {
                     ),
                   ),
                 ),
-                DropdownButton(
-                  items: <String>['name','city','adress'].map((e){
-                    return DropdownMenuItem<String>(
-                      value: e,
-                      child: Text(e),
-                    );
-                  }).toList(),
-                  onChanged: (index){
-                    setState(() {
-                      namevalue=index as String;
-                    });
 
-                  },
-                  value: namevalue,
-                )
+               Expanded(
+                    child: DropdownButton(
+                      items: <String>['name','city','adress'].map((e){
+                        return DropdownMenuItem<String>(
+                          value: e,
+                          child: Text(e),
+                        );
+                      }).toList(),
+                      onChanged: (index){
+                        setState(() {
+                          namevalue=index as String;
+                        });
+
+                      },
+                      value: namevalue,
+                    ),
+
+                ),
+
               ],
-            )
+            ),
+            Row(
+              children: <Widget>[
+                 Expanded(
+                    child: ElevatedButton(
+                      onPressed: (){},
+                      child: Text("calculet"),
+                    ),
+                  ),
+                 Expanded(
+                    child: ElevatedButton(
+                      onPressed: (){},
+                      child: Text("calculet"),
+
+                    ),
+                  ),
+
+              ],
+            ),
           ],
         ),
       ),
